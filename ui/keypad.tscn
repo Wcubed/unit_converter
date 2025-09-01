@@ -1,0 +1,122 @@
+[gd_scene load_steps=3 format=3 uid="uid://typtpmure35"]
+
+[ext_resource type="Theme" uid="uid://bi3pd420qul10" path="res://ui/assets/keypad.theme" id="1_j02ys"]
+[ext_resource type="Script" uid="uid://bmmufji25vti" path="res://ui/keypad.gd" id="2_qma8l"]
+
+[node name="Keypad" type="GridContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_j02ys")
+columns = 4
+script = ExtResource("2_qma8l")
+
+[node name="7" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "7"
+
+[node name="8" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "8"
+
+[node name="9" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "9"
+
+[node name="Backspace" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "<"
+
+[node name="4" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "4"
+
+[node name="5" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "5"
+
+[node name="6" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "6"
+
+[node name="Clear" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "C"
+
+[node name="1" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+
+[node name="2" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "2"
+
+[node name="3" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "3"
+
+[node name="Empty1" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Empty2" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="0" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "0
+"
+
+[node name="Dot" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "."
+
+[node name="Empty3" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="7" to="." method="_on__pressed" binds= [7]]
+[connection signal="pressed" from="8" to="." method="_on__pressed" binds= [8]]
+[connection signal="pressed" from="9" to="." method="_on__pressed" binds= [9]]
+[connection signal="pressed" from="Backspace" to="." method="_on_backspace_pressed"]
+[connection signal="pressed" from="4" to="." method="_on__pressed" binds= [4]]
+[connection signal="pressed" from="5" to="." method="_on__pressed" binds= [5]]
+[connection signal="pressed" from="6" to="." method="_on__pressed" binds= [6]]
+[connection signal="pressed" from="Clear" to="." method="_on_clear_pressed"]
+[connection signal="pressed" from="1" to="." method="_on__pressed" binds= [1]]
+[connection signal="pressed" from="2" to="." method="_on__pressed" binds= [2]]
+[connection signal="pressed" from="3" to="." method="_on__pressed" binds= [3]]
+[connection signal="pressed" from="0" to="." method="_on__pressed" binds= [0]]
+[connection signal="pressed" from="Dot" to="." method="_on_dot_pressed"]

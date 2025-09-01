@@ -11,8 +11,19 @@ config_version=5
 [application]
 
 config/name="unit_converter"
+run/main_scene="uid://b8gtluttwaif0"
 config/features=PackedStringArray("4.4", "Mobile")
+run/low_processor_mode=true
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=500
+window/size/viewport_height=900
+
+[gui]
+
+theme/custom="uid://dltnj5jrjaqi7"
 
 [rendering]
 
