@@ -14,25 +14,30 @@ var to_standard_unit := 1.0
 var to_output_unit := 1.0
 
 # List of units, and how many they are of the standard SI unit for this measurement.
-var units := {
-	"Meters": 1.0,
-	"Kilometers": 1000.0,
-	"Inches": 0.0254,
-	"Feet": 0.3048,
-	"Yards": 0.9144,
-	"Miles": 1609.344,
-}
+var units := {}
 
 var abbreviations := {
+	# Lengths
 	"Meters": "m",
 	"Kilometers": "km",
 	"Inches": "in",
 	"Feet": "ft",
 	"Yards": "yd",
 	"Miles": "mi",
+	# Time
+	"Seconds": "s",
+	"Minutes": "min",
+	"Hours": "h",
+	"Days": "d",
+	"Weeks": "w",
 }
 
-func _ready():
+# Update the available list of units
+func update_units(new_units: Dictionary):
+	units = new_units
+	input_units.clear()
+	output_units.clear()
+	
 	for unit in units:
 		input_units.add_item(unit)
 		output_units.add_item(unit)
@@ -78,7 +83,7 @@ func input_or_output_unit_changed():
 	
 	unit_name = output_units.get_item_text(output_units.selected)
 	unit_value = units[unit_name]
-	to_output_unit = 1/unit_value
+	to_output_unit = 1/float(unit_value)
 	output_abr.text = abbreviations[unit_name]
 	
 	recalculate_output()
@@ -88,8 +93,8 @@ func recalculate_output():
 		output_value.text = ""
 	else:
 		var input = float(input_value.text)
-		var standard_unit = input * to_standard_unit
-		var output = standard_unit * to_output_unit
+		var standard_unit = input * float(to_standard_unit)
+		var output = standard_unit * float(to_output_unit)
 		
 		output_value.text = display_float_without_nonsignificant_zeroes(output)
 
