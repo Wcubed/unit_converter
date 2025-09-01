@@ -5,6 +5,8 @@ extends VBoxContainer
 
 @onready var input_units := %InputUnits
 @onready var output_units := %OutputUnits
+@onready var input_abr := %InputAbbreviation
+@onready var output_abr := %OutputAbbreviation
 
 # What to multiply the input value with to get to a standard SI unit.
 var to_standard_unit := 1.0
@@ -19,6 +21,15 @@ var units := {
 	"Feet": 0.3048,
 	"Yards": 0.9144,
 	"Miles": 1609.344,
+}
+
+var abbreviations := {
+	"Meters": "m",
+	"Kilometers": "km",
+	"Inches": "in",
+	"Feet": "ft",
+	"Yards": "yd",
+	"Miles": "mi",
 }
 
 func _ready():
@@ -63,10 +74,12 @@ func input_or_output_unit_changed():
 	var unit_name: String = input_units.get_item_text(input_units.selected)
 	var unit_value = units[unit_name]
 	to_standard_unit = unit_value
+	input_abr.text = abbreviations[unit_name]
 	
 	unit_name = output_units.get_item_text(output_units.selected)
 	unit_value = units[unit_name]
 	to_output_unit = 1/unit_value
+	output_abr.text = abbreviations[unit_name]
 	
 	recalculate_output()
 
@@ -78,16 +91,7 @@ func recalculate_output():
 		var standard_unit = input * to_standard_unit
 		var output = standard_unit * to_output_unit
 		
-		var text = "%f" % output
-		
-		# Remove trailing nonsignificant zeroes
-		if text.contains("."):
-			while text.ends_with("0"):
-				text = text.trim_suffix("0")
-			# A trailing "." is not necessary
-			text = text.trim_suffix(".")
-		
-		output_value.text = text
+		output_value.text = display_float_without_nonsignificant_zeroes(output)
 
 
 func _on_input_units_item_selected(index: int) -> void:
@@ -96,3 +100,24 @@ func _on_input_units_item_selected(index: int) -> void:
 
 func _on_output_units_item_selected(index: int) -> void:
 	input_or_output_unit_changed()
+
+
+func _on_paste_button_pressed() -> void:
+	var value = float(DisplayServer.clipboard_get())
+	input_value.text = display_float_without_nonsignificant_zeroes(value)
+	recalculate_output()
+
+func _on_copy_button_pressed() -> void:
+	DisplayServer.clipboard_set(output_value.text)
+
+func display_float_without_nonsignificant_zeroes(input: float) -> String:
+	var text = "%f" % input
+	
+	# Remove trailing nonsignificant zeroes
+	if text.contains("."):
+		while text.ends_with("0"):
+			text = text.trim_suffix("0")
+		# A trailing "." is not necessary
+		text = text.trim_suffix(".")
+	
+	return text
