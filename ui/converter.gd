@@ -16,22 +16,6 @@ var to_output_unit := 1.0
 # List of units, and how many they are of the standard SI unit for this measurement.
 var units := {}
 
-var abbreviations := {
-	# Lengths
-	"Meters": "m",
-	"Kilometers": "km",
-	"Inches": "in",
-	"Feet": "ft",
-	"Yards": "yd",
-	"Miles": "mi",
-	# Time
-	"Seconds": "s",
-	"Minutes": "min",
-	"Hours": "h",
-	"Days": "d",
-	"Weeks": "w",
-}
-
 # Update the available list of units
 func update_units(new_units: Dictionary):
 	units = new_units
@@ -79,12 +63,12 @@ func input_or_output_unit_changed():
 	var unit_name: String = input_units.get_item_text(input_units.selected)
 	var unit_value = units[unit_name]
 	to_standard_unit = unit_value
-	input_abr.text = abbreviations[unit_name]
+	input_abr.text = find_text_between_brackets(unit_name)
 	
 	unit_name = output_units.get_item_text(output_units.selected)
 	unit_value = units[unit_name]
 	to_output_unit = 1/float(unit_value)
-	output_abr.text = abbreviations[unit_name]
+	output_abr.text = find_text_between_brackets(unit_name)
 	
 	recalculate_output()
 
@@ -126,3 +110,8 @@ func display_float_without_nonsignificant_zeroes(input: float) -> String:
 		text = text.trim_suffix(".")
 	
 	return text
+
+# Returns the text between the first and last bracket.
+# Or the original string if no brackets exist.
+func find_text_between_brackets(input: String) -> String:
+	return input.get_slice("(", 1).trim_suffix(")")
