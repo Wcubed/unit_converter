@@ -4,6 +4,7 @@ signal number_pressed(number: int)
 signal backspace_pressed()
 signal clear_pressed()
 signal dot_pressed()
+signal swap_pressed()
 
 func _on__pressed(number: int) -> void:
 	number_pressed.emit(number)
@@ -19,3 +20,7 @@ func _on_clear_pressed() -> void:
 
 func _on_dot_pressed() -> void:
 	dot_pressed.emit()
+
+
+func _on_swap_pressed() -> void:
+	swap_pressed.emit()

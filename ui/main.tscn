@@ -19,25 +19,48 @@ layout_mode = 2
 layout_mode = 2
 script = ExtResource("2_loxbi")
 
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/Converter"]
+layout_mode = 2
+
+[node name="InputUnits" type="OptionButton" parent="MarginContainer/Converter"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="InputValue" type="LineEdit" parent="MarginContainer/Converter"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 0.5
 alignment = 2
 virtual_keyboard_enabled = false
+flat = true
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Converter"]
+layout_mode = 2
+
+[node name="OutputUnits" type="OptionButton" parent="MarginContainer/Converter"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="OutputValue" type="LineEdit" parent="MarginContainer/Converter"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 0.5
 alignment = 2
 editable = false
 virtual_keyboard_enabled = false
+flat = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Converter"]
+layout_mode = 2
 
 [node name="Keypad" parent="MarginContainer/Converter" instance=ExtResource("1_fblgx")]
 layout_mode = 2
 size_flags_vertical = 3
 
+[connection signal="item_selected" from="MarginContainer/Converter/InputUnits" to="MarginContainer/Converter" method="_on_input_units_item_selected"]
+[connection signal="item_selected" from="MarginContainer/Converter/OutputUnits" to="MarginContainer/Converter" method="_on_output_units_item_selected"]
 [connection signal="backspace_pressed" from="MarginContainer/Converter/Keypad" to="MarginContainer/Converter" method="_on_keypad_backspace_pressed"]
 [connection signal="clear_pressed" from="MarginContainer/Converter/Keypad" to="MarginContainer/Converter" method="_on_keypad_clear_pressed"]
 [connection signal="dot_pressed" from="MarginContainer/Converter/Keypad" to="MarginContainer/Converter" method="_on_keypad_dot_pressed"]
 [connection signal="number_pressed" from="MarginContainer/Converter/Keypad" to="MarginContainer/Converter" method="_on_keypad_number_pressed"]
+[connection signal="swap_pressed" from="MarginContainer/Converter/Keypad" to="MarginContainer/Converter" method="_on_keypad_swap_pressed"]

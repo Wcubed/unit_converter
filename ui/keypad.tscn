@@ -79,15 +79,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "3"
 
-[node name="Empty1" type="Button" parent="."]
+[node name="Swap" type="Button" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "Swap"
 
-[node name="Empty2" type="Button" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="0" type="Button" parent="."]
 layout_mode = 2
@@ -102,10 +101,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "."
 
-[node name="Empty3" type="Button" parent="."]
+[node name="Label2" type="Label" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [connection signal="pressed" from="7" to="." method="_on__pressed" binds= [7]]
 [connection signal="pressed" from="8" to="." method="_on__pressed" binds= [8]]
@@ -118,5 +115,6 @@ size_flags_vertical = 3
 [connection signal="pressed" from="1" to="." method="_on__pressed" binds= [1]]
 [connection signal="pressed" from="2" to="." method="_on__pressed" binds= [2]]
 [connection signal="pressed" from="3" to="." method="_on__pressed" binds= [3]]
+[connection signal="pressed" from="Swap" to="." method="_on_swap_pressed"]
 [connection signal="pressed" from="0" to="." method="_on__pressed" binds= [0]]
 [connection signal="pressed" from="Dot" to="." method="_on_dot_pressed"]

@@ -1,19 +1,98 @@
 extends VBoxContainer
 
 @onready var input_value := %InputValue
+@onready var output_value := %OutputValue
+
+@onready var input_units := %InputUnits
+@onready var output_units := %OutputUnits
+
+# What to multiply the input value with to get to a standard SI unit.
+var to_standard_unit := 1.0
+# What to multiply the standard SI unit with to get to the output unit.
+var to_output_unit := 1.0
+
+# List of units, and how many they are of the standard SI unit for this measurement.
+var units := {
+	"Meters": 1.0,
+	"Kilometers": 1000.0,
+	"Inches": 0.0254,
+	"Feet": 0.3048,
+	"Yards": 0.9144,
+	"Miles": 1609.344,
+}
+
+func _ready():
+	for unit in units:
+		input_units.add_item(unit)
+		output_units.add_item(unit)
+	
+	input_units.select(0)
+	output_units.select(1)
+	
+	input_or_output_unit_changed()
 
 func _on_keypad_number_pressed(number: int) -> void:
 	input_value.text += "%d" % number
+	recalculate_output()
 
 
 func _on_keypad_backspace_pressed() -> void:
 	input_value.text = input_value.text.left(input_value.text.length() - 1)
+	recalculate_output()
 
 
 func _on_keypad_clear_pressed() -> void:
 	input_value.text = ""
+	recalculate_output()
 
 
 func _on_keypad_dot_pressed() -> void:
 	if !input_value.text.contains("."):
 		input_value.text += "."
+		recalculate_output()
+
+func _on_keypad_swap_pressed() -> void:
+	# Swap the input and output unit.
+	var input_index = input_units.selected
+	input_units.select(output_units.selected)
+	output_units.select(input_index)
+	
+	input_or_output_unit_changed()
+
+func input_or_output_unit_changed():
+	var unit_name: String = input_units.get_item_text(input_units.selected)
+	var unit_value = units[unit_name]
+	to_standard_unit = unit_value
+	
+	unit_name = output_units.get_item_text(output_units.selected)
+	unit_value = units[unit_name]
+	to_output_unit = 1/unit_value
+	
+	recalculate_output()
+
+func recalculate_output():
+	if input_value.text.is_empty():
+		output_value.text = ""
+	else:
+		var input = float(input_value.text)
+		var standard_unit = input * to_standard_unit
+		var output = standard_unit * to_output_unit
+		
+		var text = "%f" % output
+		
+		# Remove trailing nonsignificant zeroes
+		if text.contains("."):
+			while text.ends_with("0"):
+				text = text.trim_suffix("0")
+			# A trailing "." is not necessary
+			text = text.trim_suffix(".")
+		
+		output_value.text = text
+
+
+func _on_input_units_item_selected(index: int) -> void:
+	input_or_output_unit_changed()
+
+
+func _on_output_units_item_selected(index: int) -> void:
+	input_or_output_unit_changed()
